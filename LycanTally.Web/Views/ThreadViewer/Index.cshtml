@@ -1,0 +1,42 @@
+﻿@using LycanTally.Core.Entities;
+
+@model LycanTally.Web.Models.ThreadViewerVM
+
+@{
+    ViewBag.Title = "Thread Viewer";
+}
+
+@section scripts {
+
+    @*@Scripts.Render("~/Scripts/metricsRetriever.js")*@
+
+}
+
+<div>
+    @Html.LabelFor(m => m.Thread.Subject)
+</div>
+
+@foreach (Article article in Model.Thread.Articles)
+{
+    <div class="row">
+        <div class="col-xs-3 col-sm-2">
+            <p class="text-center">@Html.Raw(article.User.Name)</p>
+            <img src="@article.User.AvatarLink" class="img-responsive center-block img-rounded" />
+        </div>
+        <div class="col-xs-9 col-sm-10">
+            <div class="well">
+                @Html.Raw(article.Body)
+            </div>
+        </div>
+    </div>
+
+
+    @*<div class="media">
+        <div class="media-left">
+            @Html.Raw(article.UserName)
+        </div>
+        <div class="media-body">
+            @Html.Raw(article.Body)
+        </div>
+    </div>*@
+}

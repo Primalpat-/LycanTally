@@ -1,0 +1,32 @@
+{
+  "siteName": {
+    "value": "LycanTally"
+  },
+  "hostingPlanName": {
+    "value": "LycanTallyAppServicePlan"
+  },
+  "siteLocation": {
+    "value": "East US"
+  },
+  "sku": {
+    "value": "Free"
+  },
+  "workerSize": {
+    "value": "0"
+  },
+  "serverName": {
+    "value": "primaldevserver"
+  },
+  "serverLocation": {
+    "value": "East US"
+  },
+  "administratorLogin": {
+    "value": "Primalpat"
+  },
+  "administratorLoginPassword": {
+    "value": "Codered245"
+  },
+  "databaseName": {
+    "value": "LycanTally_db"
+  }
+}
