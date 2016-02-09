@@ -4,7 +4,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>LycanTally</title>
-    @Styles.Render("~/Content/css")
+    @Styles.Render("~/bundles/css")
 
     @Scripts.Render("~/bundles/js")
     @Scripts.Render("~/bundles/jqueryval")
@@ -30,6 +30,8 @@
             </div>
         </div>
     </div>
+    @RenderSection("NavbarAddons", false)
+
     <div class="container body-content">
         @RenderBody()
         <hr />

@@ -34,8 +34,6 @@ namespace LycanTally.Web.Controllers
             if (saveOutcome.Failure)
                 return new HttpStatusCodeResult(500, saveOutcome.ToMultiLine(Environment.NewLine));
 
-            var articles = ArticleSearcher.GetArticles(model.ThreadID, "", "0");
-
             return Json(saveOutcome, JsonRequestBehavior.AllowGet);
         }
     }

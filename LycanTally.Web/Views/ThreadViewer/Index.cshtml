@@ -1,6 +1,6 @@
-﻿@using LycanTally.Core.Entities;
+﻿@using LycanTally.Web.Models;
 
-@model LycanTally.Web.Models.ThreadViewerVM
+@model ThreadViewerVM
 
 @{
     ViewBag.Title = "Thread Viewer";
@@ -8,35 +8,83 @@
 
 @section scripts {
 
-    @*@Scripts.Render("~/Scripts/metricsRetriever.js")*@
+    <style type="text/css">
+        .body-content {
+            margin-top: 71px;
+        }
 
+        .form-inline > * {
+           margin:5px 3px;
+        }
+
+        .slider-selection {
+            background: #e6e6e6;
+        }
+
+        .quote {
+            border: 1px solid rgb(221, 221, 221);
+            margin-left: 15px;
+            padding: 5px;
+            background-color: rgb(250, 250, 250);
+        }
+    </style>
+
+    <script type="text/javascript">
+        var getArticlesURL = '@Url.Action("GetArticles","ThreadViewer")';
+        var totalDays = @Model.totalDays;
+    </script>
+
+    @Styles.Render("~/Content/bootstrap-select.min.css")
+    @Styles.Render("~/Content/bootstrap-slider.min.css")
+
+    @Scripts.Render("~/Scripts/bootstrap-select.min.js")
+    @Scripts.Render("~/Scripts/bootstrap-slider.min.js")
+
+    @Scripts.Render("~/Scripts/ThreadViewer/threadViewer.js")
 }
 
-<div>
-    @Html.LabelFor(m => m.Thread.Subject)
-</div>
-
-@foreach (Article article in Model.Thread.Articles)
-{
-    <div class="row">
-        <div class="col-xs-3 col-sm-2">
-            <p class="text-center">@Html.Raw(article.User.Name)</p>
-            <img src="@article.User.AvatarLink" class="img-responsive center-block img-rounded" />
-        </div>
-        <div class="col-xs-9 col-sm-10">
-            <div class="well">
-                @Html.Raw(article.Body)
+@section NavbarAddons {
+    <div class="navbar navbar-default navbar-fixed-top" style="top: 51px;">
+        <div class="container">
+            <div class="navbar-header">
+                <div class="row">
+                    <div class="col-md-8 col-lg-7">
+                        <form class="form-inline">
+                            @Html.HiddenFor(m => m.ThreadID)
+                            <div class="form-group">
+                                <select id="userFilter" class="selectpicker show-menu-arrow" multiple title="Filter users..."
+                                        data-selected-text-format="count > 3" data-count-selected-text="{0} users selected">
+                                    @foreach (UserItemVM item in Model.userItems)
+                                    {
+                                        <option data-content="<div style='width:40px; float:left;'><span class='badge'>@item.numArticles</span></div><div>@item.userName</div>" title="@item.userName">@item.userName</option>
+                                    }
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <b>0</b> &nbsp;
+                                <input id="dayFilter" type="text" data-slider-step="1" />
+                                &nbsp; <b>@Model.totalDays</b>
+                            </div>
+                            <div class="form-group">
+                                <button id="applyFilter" type="button" class="btn btn-primary">Get Posts</button>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="col-md-4 col-lg-5">
+                        <h4 class="truncate">@Model.Thread.Subject</h4>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
-
-
-    @*<div class="media">
-        <div class="media-left">
-            @Html.Raw(article.UserName)
-        </div>
-        <div class="media-body">
-            @Html.Raw(article.Body)
-        </div>
-    </div>*@
 }
+
+
+
+<div>
+    
+</div>
+
+<div id="articleContainer">
+
+</div>

@@ -1,0 +1,30 @@
+﻿@using LycanTally.Core.Entities
+
+@model LycanTally.Web.Models.ArticlesVM
+
+@foreach (Article article in Model.Articles)
+{
+    <div class="row">
+        <div class="col-xs-3 col-sm-2">
+            <p class="text-center">@Html.Raw(article.User.Name)</p>
+            <img src="@article.User.AvatarLink" class="img-responsive center-block img-rounded" />
+        </div>
+        <div class="col-xs-9 col-sm-10">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    @Html.Raw(article.Body)
+                    <div class="col-xs-12" style="height:10px;"></div>
+                </div>
+                <div class="panel-footer">
+                    <a href="@article.Link" target="_blank">
+                        <span class="glyphicon glyphicon-new-window" aria-hidden="true"></span>
+                    </a>
+                    Posted on 
+                    @TimeZoneInfo.ConvertTimeFromUtc(article.PostDate, 
+                                                     TimeZoneInfo.FindSystemTimeZoneById("Central Standard Time")
+                                                     ).ToString("ddd MMM d, yyyy h:mm tt")
+                </div>
+            </div>
+        </div>
+    </div>
+}

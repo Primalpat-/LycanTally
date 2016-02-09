@@ -58,6 +58,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Extensions\Queries\ArticleQueries.cs" />
+    <Compile Include="Extensions\Queries\ThreadQueries.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\Articles\ArticleSavingService.cs" />
     <Compile Include="Services\Articles\ArticleSearchService.cs" />
