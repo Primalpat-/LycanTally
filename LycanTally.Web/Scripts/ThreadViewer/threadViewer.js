@@ -11,8 +11,11 @@
 
     $('#applyFilter').click(function(){
         var threadID = $('#ThreadID').val();
-        var userFilter = $('#userFilter').val().join(",");
         var dayFilter = $('#dayFilter').val();
+        var userFilter = $('#userFilter').val() || "";
+
+        if (userFilter.length > 0)
+            userFilter = userFilter.join(",");
 
         threadViewer_OnFilter(threadID, userFilter, dayFilter);
     });
