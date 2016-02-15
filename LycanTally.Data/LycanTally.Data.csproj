@@ -50,9 +50,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Models\Context\LycanTallyContext.cs" />
+    <Compile Include="Models\Mapping\AlignmentMap.cs" />
     <Compile Include="Models\Mapping\ArticleMap.cs" />
+    <Compile Include="Models\Mapping\RoleMap.cs" />
     <Compile Include="Models\Mapping\ThreadMap.cs" />
     <Compile Include="Models\Mapping\UserMap.cs" />
+    <Compile Include="Models\Mapping\User_Thread_RolesMap.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -8,6 +8,7 @@ namespace LycanTally.Core.Entities
         public User()
         {
             this.Articles = new List<Article>();
+            this.User_Thread_Roles = new List<User_Thread_Roles>();
         }
 
         public int ID { get; set; }
@@ -17,7 +18,7 @@ namespace LycanTally.Core.Entities
         public string LastName { get; set; }
         public string AvatarLink { get; set; }
         public int YearRegistered { get; set; }
-        public DateTime LastLogin { get; set; }
+        public System.DateTime LastLogin { get; set; }
         public string StateOrProvince { get; set; }
         public string Country { get; set; }
         public string WebAddress { get; set; }
@@ -28,5 +29,6 @@ namespace LycanTally.Core.Entities
         public string SteamAccount { get; set; }
         public int TradeRating { get; set; }
         public virtual ICollection<Article> Articles { get; set; }
+        public virtual ICollection<User_Thread_Roles> User_Thread_Roles { get; set; }
     }
 }

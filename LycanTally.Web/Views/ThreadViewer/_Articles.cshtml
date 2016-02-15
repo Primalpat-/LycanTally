@@ -2,6 +2,19 @@
 
 @model LycanTally.Web.Models.ArticlesVM
 
+<style type="text/css">
+    .panel-success > .panel-footer {
+        color: #3c763d; 
+        background-color: #f0f8ed;
+        border-color: #d6e9c6;
+    }
+    .panel-danger > .panel-footer {
+        color: #a94442;
+        background-color: #f8eded;
+        border-color: #ebccd1
+    }
+</style>
+
 @foreach (Article article in Model.Articles)
 {
     <div class="row">
@@ -10,7 +23,10 @@
             <img src="@article.User.AvatarLink" class="img-responsive center-block img-rounded" />
         </div>
         <div class="col-xs-9 col-sm-10">
-            <div class="panel panel-default">
+            <div class="panel panel-@(article.User.User_Thread_Roles?.FirstOrDefault(utr => utr.ThreadID == article.ThreadID)?.Role.Alignment.Class ?? "default")">
+                <div class="panel-heading">
+                    @(article.User.User_Thread_Roles?.FirstOrDefault(utr => utr.ThreadID == article.ThreadID)?.Role.Name ?? "Uknown Role")
+                </div>
                 <div class="panel-body">
                     @Html.Raw(article.Body)
                     <div class="col-xs-12" style="height:10px;"></div>

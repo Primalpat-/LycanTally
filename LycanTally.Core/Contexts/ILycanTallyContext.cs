@@ -11,8 +11,11 @@ namespace LycanTally.Core.Contexts
 {
     public interface ILycanTallyContext
     {
+        DbSet<Alignment> Alignments { get; set; }
         DbSet<Article> Articles { get; set; }
+        DbSet<Role> Roles { get; set; }
         DbSet<Entities.Thread> Threads { get; set; }
+        DbSet<User_Thread_Roles> User_Thread_Roles { get; set; }
         DbSet<User> Users { get; set; }
         Database Database { get; }
         DbChangeTracker ChangeTracker { get; }

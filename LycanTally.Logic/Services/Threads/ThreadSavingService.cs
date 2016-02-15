@@ -13,14 +13,20 @@ namespace LycanTally.Logic.Services.Threads
             Db = db;
         }
 
-        public int SaveThread(Thread thread)
+        public bool ThreadNeededSaving(Thread thread)
         {
             Thread existingThread = Db.Threads.Where(t => t.ID == thread.ID)
                                               .FirstOrDefault();
 
             if (existingThread != null)
-                return thread.ID;
+                return false;
 
+            SaveThread(thread);
+            return true;
+        }
+
+        private int SaveThread(Thread thread)
+        {
             Db.Threads.Add(thread);
             Db.SaveChanges();
 

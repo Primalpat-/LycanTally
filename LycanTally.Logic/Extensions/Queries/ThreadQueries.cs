@@ -14,7 +14,7 @@ namespace LycanTally.Logic.Extensions.Queries
                                                .Select(a => a.FirstOrDefault())
                                                .Select(a => a.User)
                                                .ToList())
-                        .FirstOrDefault();       
+                        .FirstOrDefault();
         }
 
         public static int GetNumberOfGameDays(this DbSet<Thread> dbset, int threadID)

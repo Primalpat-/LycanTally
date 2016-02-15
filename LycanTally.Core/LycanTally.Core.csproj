@@ -51,9 +51,12 @@
   <ItemGroup>
     <Compile Include="Constants\Constants.cs" />
     <Compile Include="Contexts\ILycanTallyContext.cs" />
+    <Compile Include="Entities\Alignment.cs" />
     <Compile Include="Entities\Article.cs" />
+    <Compile Include="Entities\Role.cs" />
     <Compile Include="Entities\Thread.cs" />
     <Compile Include="Entities\User.cs" />
+    <Compile Include="Entities\User_Thread_Roles.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

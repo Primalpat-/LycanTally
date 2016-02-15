@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 
 namespace LycanTally.Core.Entities
 {
@@ -8,8 +9,8 @@ namespace LycanTally.Core.Entities
         public int ThreadID { get; set; }
         public int UserID { get; set; }
         public string Link { get; set; }
-        public DateTime PostDate { get; set; }
-        public DateTime EditDate { get; set; }
+        public System.DateTime PostDate { get; set; }
+        public System.DateTime EditDate { get; set; }
         public int NumEdits { get; set; }
         public string Subject { get; set; }
         public string Body { get; set; }
