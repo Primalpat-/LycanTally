@@ -21,6 +21,7 @@ namespace LycanTally.Logic.Extensions.Queries
         {
             return dbset.Where(t => t.ID == threadID)
                         .Select(t => t.Articles.Where(a => a.Subject != "bobtally help" &&
+                                                      a.User.Name != "Cassandra Project" &&
                                                       a.Body.Contains("[dawn]"))
                                                .Count())
                         .FirstOrDefault();

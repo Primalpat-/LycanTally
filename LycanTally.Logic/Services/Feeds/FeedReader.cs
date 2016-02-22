@@ -1,5 +1,6 @@
 ﻿using Ether.Outcomes;
 using LycanTally.Core.Entities;
+using LycanTally.Logic.SignalR;
 using System;
 using System.Xml.Linq;
 
@@ -19,7 +20,7 @@ namespace LycanTally.Logic.Services.Feeds
         /// </summary>
         /// <param name="feedUrl">URL to access the BGG API</param>
         /// <returns>Returns an Outcome object with a Thread value.</returns>
-        public IOutcome<Thread> ReadNewOrUpdatedFeed(string feedUrl)
+        public IOutcome<Thread> ReadNewOrUpdatedFeed(string connectionID, string feedUrl)
         {
             var xmlOutcome = GetXml(feedUrl);
 
@@ -27,13 +28,13 @@ namespace LycanTally.Logic.Services.Feeds
                 return Outcomes.Failure<Thread>()
                                .WithMessagesFrom(xmlOutcome);
 
-            return GetThread(xmlOutcome.Value);
+            ProgressHub.SendMessage(connectionID, "Sharpening Pitchforks...", 10);
+            return GetThread(connectionID, xmlOutcome.Value);
         }
 
         private IOutcome<XDocument> GetXml(string feedUrl)
         {
             XDocument doc;
-
             try
             {
                 doc = XDocument.Load(feedUrl);
@@ -49,13 +50,13 @@ namespace LycanTally.Logic.Services.Feeds
                            .WithValue(doc);
         }
 
-        private IOutcome<Thread> GetThread(XDocument doc)
+        private IOutcome<Thread> GetThread(string connectionID, XDocument doc)
         {
             Thread result = new Thread();
 
             try
             {
-                result = Parser.Parse(doc);
+                result = Parser.Parse(connectionID, doc);
             }
             catch (Exception ex)
             {

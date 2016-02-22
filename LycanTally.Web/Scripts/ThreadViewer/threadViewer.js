@@ -1,30 +1,33 @@
 ﻿$(document).ready(function () {
-    $("#dayFilter").slider({ 
-        min: 0, 
-        max: totalDays, 
-        range: true, 
-        value: [1, totalDays],
-        formatter: function(value){
-            return "Only show day " + value[0] + " to day " + value[1];
-        }
-    });
 
-    $('#applyFilter').click(function(){
-        var threadID = $('#ThreadID').val();
-        var dayFilter = $('#dayFilter').val();
-        var userFilter = $('#userFilter').val() || "";
+    // initialize the connection to the server
+    var progressNotifier = $.connection.progressHub;
 
-        if (userFilter.length > 0)
-            userFilter = userFilter.join(",");
+    // client-side sendMessage function that will be called from the server-side
+    progressNotifier.client.sendMessage = function (message, count) {
+        // update progress
+        UpdateProgress(message, count);
+    };
 
-        threadViewer_OnFilter(threadID, userFilter, dayFilter);
+    // establish the connection to the server and start server-side operation
+    $.connection.hub.start().done(function () {
+        // call the method CallLongOperation defined in the Hub
+        progressNotifier.server.updateThreadFromApi($.connection.hub.id, threadID);
     });
 });
 
-function threadViewer_OnFilter(threadID, userFilter, dayFilter) {
-    $('#articleContainer').fadeOut("fast", function () {
-        $('#articleContainer').load(getArticlesURL, { threadID: threadID, userFilter: userFilter, dayFilter: dayFilter }, function () {
-            $('#articleContainer').fadeIn("slow");
-        });
+function UpdateProgress(message, count) {
+    //var currentValue = parseInt($('#progressBar').attr('aria-valuenow'));
+    $('#progressBar').css('width', count + '%').attr('aria-valuenow', count);
+    $('#progressBar').html('<span>' + message + '</span>');
+
+    if (count == 100)
+        threadViewer_OnLoadComplete(threadID);
+}
+
+function threadViewer_OnLoadComplete(threadID) {
+    $('#threadContainer').load(getThreadURL, { threadID: threadID }, function () {
+        $('.progress').hide();
+        $('#threadContainer').show();
     });
 }

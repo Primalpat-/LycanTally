@@ -1,6 +1,8 @@
 ﻿using LycanTally.Core.Entities;
 using LycanTally.Logic.Services.Users;
+using LycanTally.Logic.SignalR;
 using System;
+using System.Linq;
 using System.Xml.Linq;
 
 namespace LycanTally.Logic.Services.Feeds
@@ -14,17 +16,19 @@ namespace LycanTally.Logic.Services.Feeds
             Saver = saver;
         }
 
-        public Thread Parse(XDocument doc)
+        public Thread Parse(string connectionID, XDocument doc)
         {
             Thread thread = LoadThread(doc);
-            var articles = doc.Descendants("article");
+            var articles = doc.Descendants("article").ToList();
 
-            foreach (var articleElement in articles)
+            for (int i = 0; i < articles.Count(); i++)
             {
-                var article = LoadArticle(thread, articleElement);
+                int progressCount = 10 + Convert.ToInt32((double)i / (double)articles.Count() * 46.00);
+                ProgressHub.SendMessage(connectionID, "Sharpening Pitchforks...", progressCount);
+                var article = LoadArticle(thread, articles[i]);
                 thread.Articles.Add(article);
             }
-
+                
             return thread;
         }
 

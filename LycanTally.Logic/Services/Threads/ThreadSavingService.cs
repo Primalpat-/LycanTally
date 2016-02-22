@@ -1,6 +1,7 @@
 ﻿using LycanTally.Core.Contexts;
 using LycanTally.Core.Entities;
 using System.Linq;
+using Z.Core.Extensions;
 
 namespace LycanTally.Logic.Services.Threads
 {
@@ -13,24 +14,26 @@ namespace LycanTally.Logic.Services.Threads
             Db = db;
         }
 
-        public bool ThreadNeededSaving(Thread thread)
+        public int SaveThread(Thread thread)
         {
-            Thread existingThread = Db.Threads.Where(t => t.ID == thread.ID)
-                                              .FirstOrDefault();
+            Thread existingThread = Db.Threads.FirstOrDefault(t => t.ID == thread.ID);
 
-            if (existingThread != null)
-                return false;
+            if (existingThread.IsNotNull())
+                return existingThread.ID;
 
-            SaveThread(thread);
-            return true;
-        }
+            Thread threadToSave = new Thread()
+            {
+                ID = thread.ID,
+                NumArticles = thread.NumArticles,
+                Link = thread.Link,
+                TermsOfUse = thread.TermsOfUse,
+                Subject = thread.Subject
+            };
 
-        private int SaveThread(Thread thread)
-        {
-            Db.Threads.Add(thread);
+            Db.Threads.Add(threadToSave);
             Db.SaveChanges();
 
-            return thread.ID;
+            return threadToSave.ID;
         }
     }
 }

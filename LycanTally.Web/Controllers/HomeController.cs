@@ -25,16 +25,16 @@ namespace LycanTally.Web.Controllers
             return View();
         }
 
-        public ActionResult RetrieveMetrics(HomeVM model)
-        {
-            string feedUrl = UrlBuilder.GetFeedUrl(model.ThreadID);
+        //public ActionResult RetrieveMetrics(HomeVM model)
+        //{
+        //    string feedUrl = UrlBuilder.GetFeedUrl(model.ThreadID);
 
-            var saveOutcome = Saver.Save(feedUrl);
+        //    var saveOutcome = Saver.Save(feedUrl);
 
-            if (saveOutcome.Failure)
-                return new HttpStatusCodeResult(500, saveOutcome.ToMultiLine(Environment.NewLine));
+        //    if (saveOutcome.Failure)
+        //        return new HttpStatusCodeResult(500, saveOutcome.ToMultiLine(Environment.NewLine));
 
-            return Json(saveOutcome, JsonRequestBehavior.AllowGet);
-        }
+        //    return Json(saveOutcome, JsonRequestBehavior.AllowGet);
+        //}
     }
 }

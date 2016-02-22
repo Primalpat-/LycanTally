@@ -1,0 +1,83 @@
+﻿@using LycanTally.Web.Models;
+
+@model ThreadVM
+
+@Styles.Render("~/Content/bootstrap-select.min.css")
+@Styles.Render("~/Content/bootstrap-slider.min.css")
+
+<style type="text/css">
+    .body-content {
+        margin-top: 71px;
+    }
+
+    .form-inline > * {
+        margin: 5px 3px;
+    }
+
+    .badge-danger {
+        background-color: #a94442;
+    }
+
+    .badge-success {
+        background-color: #3c763d;
+    }
+
+    .slider-track-low, .slider-track-high {
+        background-image: linear-gradient(rgb(240, 240, 240), rgb(235, 235, 235) 100%) !important;
+    }
+
+    .slider-selection {
+        background-image: linear-gradient(rgb(205, 205, 205), rgb(200, 200, 200) 100%) !important;
+    }
+</style>
+
+<div class="navbar navbar-default navbar-fixed-top" style="top: 51px;">
+    <div class="container">
+        <div class="navbar-header">
+            <div class="row">
+                <div class="col-md-8 col-lg-7">
+                    <form class="form-inline">
+                        @Html.HiddenFor(m => m.Thread.ID)
+                        <div class="form-group">
+                            <select id="userFilter" class="selectpicker show-menu-arrow" multiple title="Filter users..."
+                                    data-selected-text-format="count > 3" data-count-selected-text="{0} users selected">
+                                @foreach (UserItemVM item in Model.userItems)
+                                {
+                                    <option data-content="<div style='width:40px; float:left;'><span class='badge badge-@item.alignmentClass'>@item.numArticles</span></div><div class='text-@item.alignmentClass'>@item.userName</div>" title="@item.userName">@item.userName</option>
+                                }
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <b>0</b> &nbsp;
+                            <input id="dayFilter" type="text" data-slider-step="1" />
+                            &nbsp; <b>@Model.totalDays</b>
+                        </div>
+                        <div class="form-group">
+                            <button id="applyFilter" type="button" class="btn btn-primary"><i id="refresh" class="fa fa-refresh"></i>  Get Posts</button>
+                        </div>
+                    </form>
+                </div>
+                <div class="col-md-4 col-lg-5">
+                    <h4 class="truncate">@Model.Thread.Subject</h4>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@using (Html.BeginScriptContext())
+{
+    Html.AddScriptBlock(
+        @<script type="text/javascript">
+            var getArticlesURL = '@Url.Action("GetArticles", "ThreadViewer")';
+            var totalDays = @Model.totalDays;
+        </script>
+    , true);
+}
+
+@using (Html.BeginScriptContext())
+{
+    Html.AddScriptFile("~/Scripts/bootstrap-select.min.js", true);
+    Html.AddScriptFile("~/Scripts/bootstrap-slider.min.js", true);
+    Html.AddScriptFile("~/Scripts/ThreadViewer/thread.js", true);
+}

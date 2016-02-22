@@ -34,8 +34,8 @@ namespace LycanTally.InversionOfControl
         /// change the defaults), as Unity allows resolving a concrete type even if it was not previously registered.</remarks>
         public static void RegisterTypes(IUnityContainer unityContainer)
         {
-            RegisterByConvention(unityContainer);
             RegisterEntityFramework(unityContainer);
+            RegisterByConvention(unityContainer);
         }
 
         private static void RegisterByConvention(IUnityContainer unityContainer)
@@ -48,7 +48,7 @@ namespace LycanTally.InversionOfControl
 
         private static void RegisterEntityFramework(IUnityContainer unityContainer)
         {
-            unityContainer.RegisterType<ILycanTallyContext, LycanTallyContext>(new PerRequestLifetimeManager());
+            unityContainer.RegisterType<ILycanTallyContext, LycanTallyContext>(new TransientLifetimeManager());
         }
     }
 }

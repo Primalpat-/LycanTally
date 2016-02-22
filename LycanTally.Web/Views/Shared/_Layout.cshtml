@@ -5,10 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>LycanTally</title>
     @Styles.Render("~/bundles/css")
-
-    @Scripts.Render("~/bundles/js")
-    @Scripts.Render("~/bundles/jqueryval")
-    @RenderSection("Scripts", false)
 </head>
 <body>
     <div class="navbar navbar-inverse navbar-fixed-top">
@@ -39,5 +35,9 @@
             <p>&copy; @DateTime.Now.Year - LycanTally</p>
         </footer>
     </div>
+
+    @Scripts.Render("~/bundles/js")
+    @Scripts.Render("~/bundles/jqueryval")
+    @Html.RenderScripts()
 </body>
 </html>

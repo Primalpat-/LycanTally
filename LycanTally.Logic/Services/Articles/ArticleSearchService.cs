@@ -45,6 +45,7 @@ namespace LycanTally.Logic.Services.Articles
             {
                 return Db.Articles.Where(a => a.ThreadID == threadID &&
                                         a.Subject != "bobtally help" &&
+                                        a.User.Name != "Cassandra Project" &&
                                         a.Body.Contains("[dawn]"))
                                   .Select(a => a.ID)
                                   .ToList()[dayNumber - 1];
@@ -58,6 +59,7 @@ namespace LycanTally.Logic.Services.Articles
         {
             List<int> dawns = Db.Articles.Where(a => a.ThreadID == threadID &&
                                                 a.Subject != "bobtally help" &&
+                                                a.User.Name != "Cassandra Project" &&
                                                 a.Body.Contains("[dawn]"))
                                          .Select(a => a.ID)
                                          .ToList();
